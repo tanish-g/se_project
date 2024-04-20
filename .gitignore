@@ -1,0 +1,26 @@
+# Dependency directories
+node_modules/
+
+# Environment variables file
+.env
+
+# Log files
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Directory for compiled binaries or build output
+build/
+dist/
+out/
+
+# Ignore local development configuration
+config/local.json
+
+# Mac OS specific files
+.DS_Store

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Query Form</title>
+</head>
+<body>
+  <h1>Query Form</h1>
+  <form id="queryForm">
+    <label for="sessionInput">Session:</label>
+    <input type="text" id="sessionInput" name="sessionInput"><br>
+    <label for="sessionYearInput">Session Year:</label>
+    <input type="text" id="sessionYearInput" name="sessionYearInput"><br>
+    <label for="admnNoInput">Admission Number:</label>
+    <input type="text" id="admnNoInput" name="admnNoInput"><br>
+    <button type="submit">Submit Query</button>
+  </form>
+
+  <div id="queryResult"></div>
+
+  <script>
+    const form = document.getElementById('queryForm');
+    const resultDiv = document.getElementById('queryResult');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      
+      const formData = new FormData(form);
+      const requestData = {
+        sessionInput: formData.get('sessionInput'),
+        sessionYearInput: formData.get('sessionYearInput'),
+        admnNoInput: formData.get('admnNoInput')
+      };
+
+      try {
+        const response = await fetch('/query', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestData)
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+
+        const data = await response.json();
+        displayResults(data);
+      } catch (error) {
+        console.error(error);
+        resultDiv.textContent = 'Error fetching data';
+      }
+    });
+
+    function displayResults(data) {
+      resultDiv.innerHTML = '<h2>Query Results</h2>';
+      if (data.error) {
+        resultDiv.innerHTML += `<p>Error: ${data.error}</p>`;
+      } else {
+        const table = document.createElement('table');
+        const headers = Object.keys(data[0]);
+        const headerRow = table.insertRow();
+        headers.forEach(header => {
+          const th = document.createElement('th');
+          th.textContent = header;
+          headerRow.appendChild(th);
+        });
+
+        data.forEach(rowData => {
+          const row = table.insertRow();
+          headers.forEach(header => {
+            const cell = row.insertCell();
+            cell.textContent = rowData[header];
+          });
+        });
+
+        resultDiv.appendChild(table);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+
+INSERT INTO reg_regular_form (form_id, admn_no, course_id, branch_id, semester, session_year, session, timestamp, status, course_aggr_id, hod_status, hod_time, hod_remark, acad_status, acad_time, acad_remark, re_id, reg_type)
+SELECT jfd.form_id, jfd.admn_no, jfd.course_id, jfd.branch_id, jfd.semester, jfd.session_year, jfd.session, jfd.created_date, jfd.status, jfd.course_aggr_id, jfd.hod_status, jfd.hod_time, jfd.hod_remark, jfd.acad_status, jfd.acad_time, jfd.acad_remark, jfd.re_id, jfd.reg_type
+FROM (
+    SELECT bfd.form_id, bfd.admn_no, bfd.course_id, bfd.branch_id, bfd.semester, bfd.session_year, bfd.session, bfd.created_date, bfd.status, rrf.course_aggr_id, rrf.hod_status, rrf.hod_time, rrf.hod_remark, rrf.acad_status, rrf.acad_time, rrf.acad_remark, rrf.re_id, rrf.reg_type
+    FROM bank_fee_details bfd
+    INNER JOIN reg_regular_fee rrf ON bfd.order_number = rrf.transaction_id
+    WHERE bfd.admn_no = '21JE0529'  -- You can add any conditions here to filter the rows you want to insert
+) AS jfd;
+
+
+CREATE TABLE gen_cbcs_stu_course AS
+SELECT 
+    psc.id,
+    psc.form_id,
+    psc.admn_no,
+    CAST(SUBSTRING(psc.sub_offered_id, 2) AS UNSIGNED) AS sub_offered_id,
+    psc.subject_code,
+    'b.tech_cse_2023-2024' AS b_tech_cse_2023_2024,
+    psc.subject_name,
+    psc.priority,
+    psc.sub_category,
+    psc.map_id,
+    psc.sub_category_cbcs_offered,
+    psc.course,
+    psc.branch,
+    psc.session_year,
+    psc.session,
+    psc.updated_at
+FROM (
+    SELECT *,
+           ROW_NUMBER() OVER (PARTITION BY sub_category ORDER BY RAND()) AS row_num
+    FROM pre_stu_course
+) AS psc
+WHERE psc.row_num = 1;
