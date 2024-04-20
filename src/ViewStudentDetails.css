@@ -1,0 +1,42 @@
+.container {
+    text-align: center;
+  }
+  
+  .student-details {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    text-align: start;
+  }
+  
+  .text-details {
+    margin-right: 32px; /* Added margin between text-details and photo */
+  }
+  
+  .photo img {
+    width: 100px;
+    height: auto;
+    border: 1px solid #ddd;
+  }
+  
+  .table-container {
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  .details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .details-table th, .details-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .details-table th {
+    background-color: #f2f2f2;
+  }
+  

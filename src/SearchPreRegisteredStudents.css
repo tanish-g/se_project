@@ -1,0 +1,42 @@
+.container {
+  text-align: center;
+}
+
+.form {
+  padding: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-label {
+  margin-right: 10px;
+}
+
+.form-input {
+  margin-right: 10px;
+}
+
+.submit-btn {
+  padding: 5px 10px;
+}
+
+.table-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.students-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.students-table th, .students-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.students-table th {
+  background-color: #f2f2f2;
+}
